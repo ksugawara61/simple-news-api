@@ -12,7 +12,7 @@ class MyApp < Sinatra::Base
   get '/news' do
     genre = params['genre'].to_s
     data = {
-      "updatedAt" => Time.now.strftime("%Y-%m-%d %H:%M:%S"),
+      "updateAt" => Time.now.strftime("%Y-%m-%d %H:%M:%S"),
       "genre" => genre,
       "element" => [
                     "title" => "G 沢村追いつかれ延長で競り負け",
