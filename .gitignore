@@ -4,3 +4,4 @@
 /logs/*.log
 /tmp/sock/*.sock
 /tmp/pid/*.pid
+/config/database.yml

@@ -1,0 +1,19 @@
+default: &default
+  adapter: mysql2
+  encoding: utf8
+  username: name  # DBユーザ名
+  password: password  # DBユーザのパスワード
+  socket: /var/lib/mysql/mysql.sock
+  timeout: 5000
+
+development:
+  <<: *default
+  database: news_dev_NAME  # DB名を他開発者と区別する
+
+test:
+  <<: *default
+  database: news_test_NAME  # DB名を他開発者と区別する
+
+production:
+  <<: *default
+  database: news_production
