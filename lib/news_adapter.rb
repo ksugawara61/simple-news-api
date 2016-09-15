@@ -1,12 +1,23 @@
 module NewsAdapter
 
+  API_NEWS_GENRE = {
+    "bizskills" => "仕事術",
+    "business"  => "経済",
+    "entame"    => "エンタメ",
+    "life"      => "生活術",
+    "nation"    => "社会",
+    "politics"  => "政治",
+    "sports"    => "スポーツ",
+    "world"     => "国際・科学"
+  }
+
   module_function
 
   # ニュースのジャンル名を取得
   # @param  [String] genre ニュースのジャンル
   # @param  [String] ジャンル名
   def get_news_name(genre)
-    return genre
+    return API_NEWS_GENRE[genre]
   end
 
   # ニュースを生成
