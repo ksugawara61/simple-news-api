@@ -1,8 +1,8 @@
 default: &default
   adapter: mysql2
   encoding: utf8
-  username: name  # DBユーザ名
-  password: password  # DBユーザのパスワード
+  username: NAME  # DBユーザ名
+  password: PASSWORD  # DBユーザのパスワード
   socket: /var/lib/mysql/mysql.sock
   timeout: 5000
 
