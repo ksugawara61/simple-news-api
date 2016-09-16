@@ -43,7 +43,7 @@ module GetNewsData
     when 'sports'
       get_news_data('sports')
     else
-      puts 'please check target'
+      NewsLogger.err_logging "#{TAG} invalid input parameter"
     end
   end
 
@@ -53,7 +53,7 @@ module GetNewsData
     source = NEWS_SOURCE[category]
 
     if source.nil?
-      puts "get_news_data : invalid input parameter"
+      NewsLogger.err_logging "#{TAG} invalid category parameter"
       return
     end
 
