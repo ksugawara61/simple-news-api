@@ -17,11 +17,11 @@ describe "NewsAPI" do
 
   it "JSONの情報が取得できること" do
     result = JSON.parse(last_response.body)
-    expect(result.has_key?("updateAt")).to eq(true)
-    expect(result.has_key?("genre")).to eq(true)
+    expect(result.has_key?("generated_at")).to eq(true)
 
-    value = result["element"].first
+    value = result["item"].first
     expect(value.has_key?("title")).to eq(true)
+    expect(value.has_key?("genreName")).to eq(true)
     expect(value.has_key?("link")).to eq(true)
     expect(value.has_key?("siteName")).to eq(true)
     expect(value.has_key?("thumbnail")).to eq(true)
