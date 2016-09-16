@@ -5,3 +5,4 @@
 /tmp/sock/*.sock
 /tmp/pid/*.pid
 /config/database.yml
+/data/*.tsv
