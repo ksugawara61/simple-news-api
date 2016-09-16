@@ -1,3 +1,4 @@
+require 'time'
 require 'rss'
 require 'nokogiri'
 require 'open-uri'
@@ -69,8 +70,9 @@ module GetNewsData
         charset = f.charset
         f.read
       end
-      
-      # HTMLからニュースの各要素をスクレイピング
+
+      # データとして保存する各要素を変数に格納
+      # HTMLからニュースの要素をスクレイピング
       doc = Nokogiri::HTML.parse(html, nil, charset)
       tmp = doc.xpath('//div[@class="gn-topics"]/h2/a')
       title = tmp.nil? ? "" : tmp.text
@@ -80,14 +82,16 @@ module GetNewsData
       thumbnail = tmp.empty? ? "" : tmp.attribute("src").value
 
       genre_name = source[:GENRE]
+      link = item.link
+      pubDate = item.pubDate.strftime("%Y-%m-%d %H:%M:%S")
 
-      file.puts "#{title}\t#{genre_name}\t#{item.link}\t#{site_name}\t#{thumbnail}\t#{item.pubDate}"
+      file.puts "#{title}\t#{genre_name}\t#{link}\t#{site_name}\t#{thumbnail}\t#{pubDate}"
       NewsLogger.app_logging "#{TAG} title => #{title}"
       NewsLogger.app_logging "#{TAG} genreName => #{genre_name}"
-      NewsLogger.app_logging "#{TAG} link => #{item.link}"
+      NewsLogger.app_logging "#{TAG} link => #{link}"
       NewsLogger.app_logging "#{TAG} siteName => #{site_name}"
       NewsLogger.app_logging "#{TAG} thumbnail => #{thumbnail}"
-      NewsLogger.app_logging "#{TAG} pubDate => #{item.pubDate}"
+      NewsLogger.app_logging "#{TAG} pubDate => #{pubDate}"
     }
     file.close
 
