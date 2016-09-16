@@ -30,14 +30,20 @@ module NewsAdapter
     end
 
     # データからカテゴリのニュースを取得
-    File.open(source[:FILE], 'r') do |file|
-      file.each_line do |line|
-        param = Hash.new
-        line.split("\t").each_with_index do |item, i|
-          param[JSON_KEYS[i]] = item.chomp
+    begin
+      File.open(source[:FILE], 'r') do |file|
+        file.each_line do |line|
+          param = Hash.new
+          line.split("\t").each_with_index do |item, i|
+            param[JSON_KEYS[i]] = item.chomp
+          end
+          news.push(param)
         end
-        news.push(param)
       end
+    rescue SystemCallError => e
+      NewsLogger.err_logging e
+    rescue IOError => e
+      NewsLogger.err_logging e
     end
 
     # news = [
