@@ -4,28 +4,20 @@ require './lib/news_logger'
 module NewsAdapter
 
   TAG = "NewsAdapter:"
-  JSON_KEYS = ["title", "link", "siteName", "thumbnail", "pubDate"]
+  JSON_KEYS = ["title", "genreName", "link", "siteName", "thumbnail", "pubDate"]
 
   module_function
 
-  # ニュースのカテゴリ名を取得
-  # @param  [String] category ニュースのカテゴリ
-  # @param  [String] カテゴリ名
-  def get_news_name(category)
-    source = NEWS_SOURCE[category]
-    return source.nil? ? '' : source[:CATEGORY]
-  end
-
   # ニュースを生成
-  # @param  [String] category ニュースのカテゴリ
+  # @param  [String] genre ニュースのジャンル
   # @return [Array]  指定したジャンルのニュース
-  def make_news(category)
-    source = NEWS_SOURCE[category]
+  def make_news(genre)
+    source = NEWS_SOURCE[genre]
     news = Array.new
 
     # カテゴリに誤りがある場合空の配列を返却
     if source.nil?
-      NewsLogger.err_logging "#{TAG} invalid category parameter"
+      NewsLogger.err_logging "#{TAG} invalid genre parameter"
       return news
     end
 

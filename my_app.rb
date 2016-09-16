@@ -11,11 +11,10 @@ class MyApp < Sinatra::Base
 
   # ニュースAPI
   get '/news' do
-    category = params['category'].to_s
+    genre = params['genre'].to_s
     data = {
-      "updateAt" => Time.now.strftime("%Y-%m-%d %H:%M:%S"),
-      "category" => NewsAdapter.get_news_name(category),
-      "element" => NewsAdapter.make_news(category)
+      "generated_at" => Time.now.strftime("%Y-%m-%d %H:%M:%S"),
+      "item" => NewsAdapter.make_news(genre)
     }
 
     "#{data.to_json}"

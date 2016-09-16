@@ -48,16 +48,16 @@ module GetNewsData
   end
 
   # ニュースのデータを取得
-  # @param [String] category ニュースのカテゴリ
-  def get_news_data(category)
-    source = NEWS_SOURCE[category]
+  # @param [String] genre ニュースのジャンル
+  def get_news_data(genre)
+    source = NEWS_SOURCE[genre]
 
     if source.nil?
-      NewsLogger.err_logging "#{TAG} invalid category parameter"
+      NewsLogger.err_logging "#{TAG} invalid genre parameter"
       return
     end
 
-    NewsLogger.app_logging "#{TAG} ##### Start Read #{category}"
+    NewsLogger.app_logging "#{TAG} ##### Start Read #{genre}"
 
     file = File.open(source[:FILE], 'w')
 
@@ -79,16 +79,19 @@ module GetNewsData
       tmp = doc.xpath('//div[@class="topics-thumbs"]/p/a/img')
       thumbnail = tmp.empty? ? "" : tmp.attribute("src").value
 
-      file.puts "#{title}\t#{item.link}\t#{site_name}\t#{thumbnail}\t#{item.pubDate}"
-      NewsLogger.app_logging "#{TAG} title #{title}"
-      NewsLogger.app_logging "#{TAG} link #{item.link}"
-      NewsLogger.app_logging "#{TAG} siteName #{site_name}"
-      NewsLogger.app_logging "#{TAG} thumbnail #{thumbnail}"
-      NewsLogger.app_logging "#{TAG} pubDate #{item.pubDate}"
+      genre_name = source[:GENRE]
+
+      file.puts "#{title}\t#{genre_name}\t#{item.link}\t#{site_name}\t#{thumbnail}\t#{item.pubDate}"
+      NewsLogger.app_logging "#{TAG} title => #{title}"
+      NewsLogger.app_logging "#{TAG} genreName => #{genre_name}"
+      NewsLogger.app_logging "#{TAG} link => #{item.link}"
+      NewsLogger.app_logging "#{TAG} siteName => #{site_name}"
+      NewsLogger.app_logging "#{TAG} thumbnail => #{thumbnail}"
+      NewsLogger.app_logging "#{TAG} pubDate => #{item.pubDate}"
     }
     file.close
 
-    NewsLogger.app_logging "#{TAG} Finish Read #{category} ---------->>>>>>>>>>"
+    NewsLogger.app_logging "#{TAG} Finish Read #{genre} ---------->>>>>>>>>>"
 
   end
 
