@@ -3,9 +3,12 @@ require 'nokogiri'
 require 'open-uri'
 require 'rubygems'
 require './lib/news_tools'
+require './lib/news_logger'
 
 # ニュースのデータを取得するバッチ
 module GetNewsData
+
+  TAG = "GetNewsData:"
 
   module_function
 
@@ -54,6 +57,8 @@ module GetNewsData
       return
     end
 
+    NewsLogger.app_logging "#{TAG} ##### Start Read #{category} RSS #{Time.now}"
+
     file = File.open(source[:FILE], 'w')
 
     rss = RSS::Parser.parse(source[:URL])
@@ -70,15 +75,20 @@ module GetNewsData
       tmp = doc.xpath('//div[@class="gn-topics"]/h2/a')
       title = tmp.nil? ? "" : tmp.text
       tmp = doc.xpath('//p[@class="topics-news-source margin-bottom15"]/a')
-      siteName = tmp.nil? ? "" : tmp.text
+      site_name = tmp.nil? ? "" : tmp.text
       tmp = doc.xpath('//div[@class="topics-thumbs"]/p/a/img')
       thumbnail = tmp.empty? ? "" : tmp.attribute("src").value
 
-      file.puts "#{title}\t#{item.link}\t#{siteName}\t#{thumbnail}\t#{item.pubDate}"
-      puts "#{title} #{item.link} #{siteName} #{thumbnail} #{item.pubDate}"
+      file.puts "#{title}\t#{item.link}\t#{site_name}\t#{thumbnail}\t#{item.pubDate}"
+      NewsLogger.app_logging "#{TAG} title #{title}"
+      NewsLogger.app_logging "#{TAG} link #{item.link}"
+      NewsLogger.app_logging "#{TAG} siteName #{site_name}"
+      NewsLogger.app_logging "#{TAG} thumbnail #{thumbnail}"
+      NewsLogger.app_logging "#{TAG} pubDate #{item.pubDate}"
     }
-
     file.close
+
+    NewsLogger.app_logging "#{TAG} Finish ---------->>>>>>>>>>"
 
   end
 
