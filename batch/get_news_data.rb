@@ -57,7 +57,7 @@ module GetNewsData
       return
     end
 
-    NewsLogger.app_logging "#{TAG} ##### Start Read #{category} RSS #{Time.now}"
+    NewsLogger.app_logging "#{TAG} ##### Start Read #{category}"
 
     file = File.open(source[:FILE], 'w')
 
@@ -88,7 +88,7 @@ module GetNewsData
     }
     file.close
 
-    NewsLogger.app_logging "#{TAG} Finish ---------->>>>>>>>>>"
+    NewsLogger.app_logging "#{TAG} Finish Read #{category} ---------->>>>>>>>>>"
 
   end
 
