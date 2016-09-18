@@ -1,15 +1,9 @@
-# sinatra template
+# Simple News API
 
 ## How to Install
 
 ```
 bundle install --path vendor/bundle
-```
-
-## How to Run
-
-```
-$ bundle exec rackup -o 0.0.0.0 -p 8080
 ```
 
 ## How to create DB
@@ -20,6 +14,24 @@ $ cp config/database.yml.sample config/database.yml
 $ bundle exec rake db:drop    // dbの削除
 $ bundle exec rake db:create  // dbの作成
 $ bundle exec rake db:migrate
+```
+
+## How to create Data
+
+```
+$ bundle exec ruby batch/get_news_data.rb
+```
+
+## How to Test
+
+```
+$ bundle exec rspec spec 
+```
+
+## How to Run
+
+```
+$ bundle exec rackup -o 0.0.0.0 -p 8080
 ```
 
 ## References
